@@ -23,7 +23,13 @@ namespace RandomSerialData
             InitializeComponent();
             CmbBx_Port.DataSource = SerialPort.GetPortNames();
             CmbBx_Parity.DataSource = Enum.GetValues(typeof(Parity));
-            CmbBx_StpBit.DataSource = Enum.GetValues(typeof(StopBits));
+            Array StopBitArray = Enum.GetValues(typeof(StopBits));
+            List<StopBits> StopBitList = new List<StopBits>();
+            for (int i = 1; i < StopBitArray.Length; i++)
+            {
+                StopBitList.Add((StopBits)StopBitArray.GetValue(i));
+            }
+            CmbBx_StpBit.DataSource = StopBitList;
             CmbBx_Baud.SelectedIndex = 0;
             CmbBx_DatBit.SelectedIndex = 0;
         }
@@ -31,6 +37,7 @@ namespace RandomSerialData
         private void Port_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             textBox1.AppendText($"Data received{Environment.NewLine}");
+            Bitmap bm = new Bitmap(1024,1);
         }
 
         async Task GenerateRandomAsync()
@@ -80,6 +87,7 @@ namespace RandomSerialData
                 tokenSource.Cancel();
                 btn.Text = "Start";
             }
+            
         }
 
         private void Btn_Connect_Click(object sender, EventArgs e)
@@ -88,11 +96,14 @@ namespace RandomSerialData
             {
                 Port = new SerialPort(CmbBx_Port.SelectedItem.ToString(), int.Parse(CmbBx_Baud.SelectedItem.ToString()))
                 {
-                    StopBits = (StopBits)CmbBx_StpBit.SelectedIndex,
                     DataBits = int.Parse(CmbBx_DatBit.SelectedItem.ToString()),
                     Parity = (Parity)CmbBx_Parity.SelectedIndex,
                     WriteTimeout = (int)NUD_Timeout.Value,
                 };
+                if (CmbBx_StpBit.SelectedIndex>0)
+                {
+                    Port.StopBits = (StopBits)CmbBx_StpBit.SelectedIndex;
+                }
                 Port.DataReceived += Port_DataReceived;
                 Port.Open();
                 Btn_Connect.Text = "Disconnect";
