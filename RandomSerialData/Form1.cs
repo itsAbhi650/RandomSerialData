@@ -21,7 +21,11 @@ namespace RandomSerialData
         public Form1()
         {
             InitializeComponent();
-            comboBox1.DataSource = SerialPort.GetPortNames();
+            CmbBx_Port.DataSource = SerialPort.GetPortNames();
+            CmbBx_Parity.DataSource = Enum.GetValues(typeof(Parity));
+            CmbBx_StpBit.DataSource = Enum.GetValues(typeof(StopBits));
+            CmbBx_Baud.SelectedIndex = 0;
+            CmbBx_DatBit.SelectedIndex = 0;
         }
 
         private void Port_DataReceived(object sender, SerialDataReceivedEventArgs e)
@@ -78,40 +82,34 @@ namespace RandomSerialData
             }
         }
 
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void Btn_Connect_Click(object sender, EventArgs e)
         {
             if (Btn_Connect.Text == "Connect")
             {
-                Port = new SerialPort(comboBox1.SelectedItem.ToString(), 9600)
+                Port = new SerialPort(CmbBx_Port.SelectedItem.ToString(), int.Parse(CmbBx_Baud.SelectedItem.ToString()))
                 {
-                    StopBits = StopBits.Two,
-                    DataBits = 8,
-                    Parity = Parity.None,
-                    DiscardNull = true,
-                    WriteTimeout = 2000
+                    StopBits = (StopBits)CmbBx_StpBit.SelectedIndex,
+                    DataBits = int.Parse(CmbBx_DatBit.SelectedItem.ToString()),
+                    Parity = (Parity)CmbBx_Parity.SelectedIndex,
+                    WriteTimeout = (int)NUD_Timeout.Value,
                 };
                 Port.DataReceived += Port_DataReceived;
                 Port.Open();
                 Btn_Connect.Text = "Disconnect";
                 textBox1.AppendText($"Connected to {Port.PortName}" + Environment.NewLine);
                 Btn_Start.Enabled = true;
-                comboBox1.Enabled = false;
+                Pnl_PortControl.Enabled = false;
             }
             else
             {
-                tokenSource.Cancel();
+                tokenSource?.Cancel();
                 Btn_Start.Text = "Start";
                 Port.Close();
                 Port.Dispose();
                 Btn_Connect.Text = "Connect";
                 textBox1.AppendText($"Disconnected" + Environment.NewLine);
                 Btn_Start.Enabled = false;
-                comboBox1.Enabled = true;
+                Pnl_PortControl.Enabled = true;
             }
         }
     }
