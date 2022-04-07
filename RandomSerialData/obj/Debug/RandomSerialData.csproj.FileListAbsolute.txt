@@ -1,0 +1,14 @@
+C:\Users\pc\source\repos\RandomSerialData\RandomSerialData\bin\Debug\RandomSerialData.exe.config
+C:\Users\pc\source\repos\RandomSerialData\RandomSerialData\bin\Debug\RandomSerialData.exe
+C:\Users\pc\source\repos\RandomSerialData\RandomSerialData\bin\Debug\RandomSerialData.pdb
+C:\Users\pc\source\repos\RandomSerialData\RandomSerialData\bin\Debug\Fare.dll
+C:\Users\pc\source\repos\RandomSerialData\RandomSerialData\bin\Debug\RandomDataGenerator.dll
+C:\Users\pc\source\repos\RandomSerialData\RandomSerialData\bin\Debug\RandomDataGenerator.pdb
+C:\Users\pc\source\repos\RandomSerialData\RandomSerialData\obj\Debug\RandomSerialData.csprojAssemblyReference.cache
+C:\Users\pc\source\repos\RandomSerialData\RandomSerialData\obj\Debug\RandomSerialData.Form1.resources
+C:\Users\pc\source\repos\RandomSerialData\RandomSerialData\obj\Debug\RandomSerialData.Properties.Resources.resources
+C:\Users\pc\source\repos\RandomSerialData\RandomSerialData\obj\Debug\RandomSerialData.csproj.GenerateResource.cache
+C:\Users\pc\source\repos\RandomSerialData\RandomSerialData\obj\Debug\RandomSerialData.csproj.CoreCompileInputs.cache
+C:\Users\pc\source\repos\RandomSerialData\RandomSerialData\obj\Debug\RandomSerialData.csproj.CopyComplete
+C:\Users\pc\source\repos\RandomSerialData\RandomSerialData\obj\Debug\RandomSerialData.exe
+C:\Users\pc\source\repos\RandomSerialData\RandomSerialData\obj\Debug\RandomSerialData.pdb
