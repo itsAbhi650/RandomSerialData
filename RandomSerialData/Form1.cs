@@ -21,16 +21,7 @@ namespace RandomSerialData
         public Form1()
         {
             InitializeComponent();
-            Port = new SerialPort("COM3", 9600)
-            {
-                StopBits = StopBits.Two,
-                DataBits = 8,
-                Parity = Parity.None,
-                DiscardNull = true,
-                WriteTimeout = 2000
-            };
-            Port.Open();
-            Port.DataReceived += Port_DataReceived;
+            comboBox1.DataSource = SerialPort.GetPortNames();
         }
 
         private void Port_DataReceived(object sender, SerialDataReceivedEventArgs e)
@@ -56,10 +47,10 @@ namespace RandomSerialData
                     }
                     catch (TimeoutException ex)
                     {
-                        textBox1.AppendText(ex.Message+Environment.NewLine);
+                        textBox1.AppendText(ex.Message + Environment.NewLine);
                         textBox1.AppendText($"Make sure device is connected!{Environment.NewLine}");
                         tokenSource.Cancel();
-                        button1.Text = "Start";
+                        Btn_Start.Text = "Start";
                     }
                     finally
                     {
@@ -67,6 +58,7 @@ namespace RandomSerialData
                     }
                 });
             }
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -83,6 +75,43 @@ namespace RandomSerialData
             {
                 tokenSource.Cancel();
                 btn.Text = "Start";
+            }
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Btn_Connect_Click(object sender, EventArgs e)
+        {
+            if (Btn_Connect.Text == "Connect")
+            {
+                Port = new SerialPort(comboBox1.SelectedItem.ToString(), 9600)
+                {
+                    StopBits = StopBits.Two,
+                    DataBits = 8,
+                    Parity = Parity.None,
+                    DiscardNull = true,
+                    WriteTimeout = 2000
+                };
+                Port.DataReceived += Port_DataReceived;
+                Port.Open();
+                Btn_Connect.Text = "Disconnect";
+                textBox1.AppendText($"Connected to {Port.PortName}" + Environment.NewLine);
+                Btn_Start.Enabled = true;
+                comboBox1.Enabled = false;
+            }
+            else
+            {
+                tokenSource.Cancel();
+                Btn_Start.Text = "Start";
+                Port.Close();
+                Port.Dispose();
+                Btn_Connect.Text = "Connect";
+                textBox1.AppendText($"Disconnected" + Environment.NewLine);
+                Btn_Start.Enabled = false;
+                comboBox1.Enabled = true;
             }
         }
     }
