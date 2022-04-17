@@ -42,14 +42,14 @@ namespace RandomSerialData
 
         async Task GenerateRandomAsync()
         {
-            Random rand = new Random(255);
+            Random rand = new Random();
             while (!tokenSource.IsCancellationRequested)
             {
                 await Task.Run(() =>
                 {
                     for (int i = 0; i < 1024; i++)
                     {
-                        buffer[i] = (byte)rand.Next(0, 255);
+                        buffer[i] = (byte)rand.Next((int)NUD_FromRand.Value, (int)NUD_ToRand.Value);
                     }
                     try
                     {
@@ -121,6 +121,15 @@ namespace RandomSerialData
                 textBox1.AppendText($"Disconnected" + Environment.NewLine);
                 Btn_Start.Enabled = false;
                 Pnl_PortControl.Enabled = true;
+            }
+        }
+
+        private void NUD_FromRand_ValueChanged(object sender, EventArgs e)
+        {
+            if (NUD_FromRand.Value>NUD_ToRand.Value)
+            {
+                MessageBox.Show("From must within range To's range");
+                NUD_FromRand.Value = NUD_ToRand.Value; 
             }
         }
     }
