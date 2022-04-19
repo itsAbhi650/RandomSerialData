@@ -15,7 +15,7 @@ namespace RandomSerialData
 {
     public partial class Form1 : Form
     {
-        byte[] buffer = new byte[1024];
+
         CancellationTokenSource tokenSource;
         SerialPort Port;
         public Form1()
@@ -36,13 +36,27 @@ namespace RandomSerialData
 
         private void Port_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            textBox1.AppendText($"Data received{Environment.NewLine}");
-            Bitmap bm = new Bitmap(1024,1);
+            byte[] buffer = new byte[Port.ReceivedBytesThreshold];
+            var DataCount = Port.BaseStream.ReadAsyncTimeout(buffer, 0, buffer.Length);
+            textBox1.AppendText($"{DataCount.Result.ToString()}{Environment.NewLine}");
+        }
+
+        private void ThreadSafeCall(MethodInvoker method)
+        {
+            if (InvokeRequired)
+            {
+                BeginInvoke(method);
+            }
+            else
+            {
+                method.Invoke();
+            }
         }
 
         async Task GenerateRandomAsync()
         {
             Random rand = new Random();
+            var buffer = new byte[1024];
             while (!tokenSource.IsCancellationRequested)
             {
                 await Task.Run(() =>
@@ -87,7 +101,7 @@ namespace RandomSerialData
                 tokenSource.Cancel();
                 btn.Text = "Start";
             }
-            
+
         }
 
         private void Btn_Connect_Click(object sender, EventArgs e)
@@ -98,9 +112,9 @@ namespace RandomSerialData
                 {
                     DataBits = int.Parse(CmbBx_DatBit.SelectedItem.ToString()),
                     Parity = (Parity)CmbBx_Parity.SelectedIndex,
-                    WriteTimeout = (int)NUD_Timeout.Value,
+                    ReadTimeout = (int)NUD_Timeout.Value,
                 };
-                if (CmbBx_StpBit.SelectedIndex>0)
+                if (CmbBx_StpBit.SelectedIndex > 0)
                 {
                     Port.StopBits = (StopBits)CmbBx_StpBit.SelectedIndex;
                 }
@@ -126,11 +140,23 @@ namespace RandomSerialData
 
         private void NUD_FromRand_ValueChanged(object sender, EventArgs e)
         {
-            if (NUD_FromRand.Value>NUD_ToRand.Value)
+            if (NUD_FromRand.Value > NUD_ToRand.Value)
             {
                 MessageBox.Show("From must within range To's range");
-                NUD_FromRand.Value = NUD_ToRand.Value; 
+                NUD_FromRand.Value = NUD_ToRand.Value;
             }
         }
+
+        private void NUD_RBT_ValueChanged(object sender, EventArgs e)
+        {
+            Port.ReceivedBytesThreshold = Convert.ToInt32(NUD_RBT.Value);
+        }
+
+        private void NUD_Timeout_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void alwaysOnTopToolStripMenuItem_Click(object sender, EventArgs e) => alwaysOnTopToolStripMenuItem.Checked = TopMost = !alwaysOnTopToolStripMenuItem.Checked;
     }
 }

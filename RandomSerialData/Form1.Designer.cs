@@ -54,6 +54,9 @@
             this.label10 = new System.Windows.Forms.Label();
             this.NUD_FromRand = new System.Windows.Forms.NumericUpDown();
             this.label9 = new System.Windows.Forms.Label();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.alwaysOnTopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_RBT)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.Pnl_PortControl.SuspendLayout();
@@ -62,6 +65,7 @@
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_ToRand)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_FromRand)).BeginInit();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // Btn_Start
@@ -82,7 +86,7 @@
             this.label1.BackColor = System.Drawing.SystemColors.ControlDark;
             this.label1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.label1.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(0, 329);
+            this.label1.Location = new System.Drawing.Point(0, 353);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(539, 13);
             this.label1.TabIndex = 1;
@@ -95,7 +99,7 @@
             this.textBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.textBox1.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox1.ForeColor = System.Drawing.Color.Lime;
-            this.textBox1.Location = new System.Drawing.Point(0, 0);
+            this.textBox1.Location = new System.Drawing.Point(0, 24);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
@@ -228,13 +232,14 @@
             0,
             0,
             0});
+            this.NUD_RBT.ValueChanged += new System.EventHandler(this.NUD_RBT_ValueChanged);
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.Pnl_PortControl);
             this.groupBox1.Controls.Add(this.Btn_Connect);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBox1.Location = new System.Drawing.Point(0, 205);
+            this.groupBox1.Location = new System.Drawing.Point(0, 229);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(0);
             this.groupBox1.Size = new System.Drawing.Size(539, 62);
@@ -285,6 +290,7 @@
             0,
             0,
             0});
+            this.NUD_Timeout.ValueChanged += new System.EventHandler(this.NUD_Timeout_ValueChanged);
             // 
             // label8
             // 
@@ -357,7 +363,7 @@
             this.groupBox2.Controls.Add(this.NUD_RBT);
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox2.Location = new System.Drawing.Point(0, 267);
+            this.groupBox2.Location = new System.Drawing.Point(0, 291);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(0);
             this.groupBox2.Size = new System.Drawing.Size(539, 62);
@@ -449,15 +455,42 @@
             this.label9.Text = "From";
             this.label9.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.optionsToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(539, 24);
+            this.menuStrip1.TabIndex = 16;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // optionsToolStripMenuItem
+            // 
+            this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.alwaysOnTopToolStripMenuItem});
+            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.optionsToolStripMenuItem.Text = "Options";
+            // 
+            // alwaysOnTopToolStripMenuItem
+            // 
+            this.alwaysOnTopToolStripMenuItem.Name = "alwaysOnTopToolStripMenuItem";
+            this.alwaysOnTopToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.alwaysOnTopToolStripMenuItem.Text = "Always on Top";
+            this.alwaysOnTopToolStripMenuItem.Click += new System.EventHandler(this.alwaysOnTopToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(539, 342);
+            this.ClientSize = new System.Drawing.Size(539, 366);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Form1";
@@ -473,6 +506,8 @@
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_ToRand)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_FromRand)).EndInit();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -506,6 +541,9 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.NumericUpDown NUD_FromRand;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem alwaysOnTopToolStripMenuItem;
     }
 }
 
